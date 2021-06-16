@@ -1,0 +1,46 @@
+<div class="container">
+  {% paginate collection.products by 12 %}
+  <header role="banner">
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4 text-center">{{ collection.title }}</h1>
+        {% if collection.description != blank %}
+        <div>
+          {{ collection.description }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="row">
+    {% for product in collection.products %}
+    <div class="col-md-6">
+      <div class="card border-0">
+        {% if product.featured_image != blank %}
+        <!-- <a href="{{ product.url | within: collection }}">
+          {% include 'responsive-image' with image: product.featured_image, max_width: 700, image_class: "card-img-top",
+          max_height: 800 %}
+        </a> -->
+        {% else %}
+        {{ 'product-4' | placeholder_svg_tag: 'placeholder-svg
+            placeholder-svg' }}
+        {% endif %}
+
+        <div class="card-body">
+          <div class="text-center card-title">
+            <h2>
+              <a class="text-decoration-none text-reset" href="{{ product.url | within: collection }}">
+                {{ product.title }}
+              </a>
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %} {% include 'pagination' %} {% endif %} {% endpaginate %}
+</div>
